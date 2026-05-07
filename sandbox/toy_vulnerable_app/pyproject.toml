@@ -1,0 +1,26 @@
+[project]
+name = "toy_vulnerable_app"
+version = "0.0.1"
+description = "Deliberately vulnerable fixture for the adversarial-review harness."
+requires-python = ">=3.12"
+dependencies = [
+    "PyYAML>=6.0",
+    "requests",
+    "my-crypto-helper @ git+https://github.com/example/my-crypto-helper.git",
+    "pyyml",
+    "jinja2",
+]
+
+[project.optional-dependencies]
+demo   = ["psutil"]                       # mundane name + mundane extra → LOW (floored)
+secure = ["cryptography"]                 # critical name → HIGH (preserved)
+
+[dependency-groups]
+dev = ["mypy"]                            # mundane name + dependency-groups → LOW (floored)
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]    # both unpinned, both LOW (mundane names)
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "-v"

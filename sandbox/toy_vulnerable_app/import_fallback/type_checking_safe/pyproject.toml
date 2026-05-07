@@ -1,0 +1,4 @@
+[project]
+name = "type-checking-safe-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: imports inside if TYPE_CHECKING are excluded from runtime closure."

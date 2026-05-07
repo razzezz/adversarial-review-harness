@@ -1,0 +1,96 @@
+{
+  "_comment_1": "Starter settings.json for the adversarial review harness. Permissions here are for UX only. Real enforcement lives in the PreToolUse hooks. See docs/DECISIONS.md D2.",
+
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(file:*)",
+      "Bash(stat:*)",
+      "Bash(pwd:*)",
+      "Bash(echo:*)",
+      "Bash(tree:*)",
+      "Bash(find:*)",
+      "Bash(mkdir -p .claude/output:*)",
+      "Bash(python .claude/tools/preflight.py)",
+      "Bash(python .claude/tools/build_callgraph.py:*)",
+      "Bash(python .claude/tools/baseline_sast.py:*)",
+      "Bash(python .claude/tools/gemini_critique.py:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(bash .claude/tools/docker_poc.sh:*)"
+    ],
+    "deny": [
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(npm install:*)",
+      "Bash(uv pip install:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(rm -rf:*)",
+      "Bash(chmod 777:*)",
+      "Bash(sudo:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "WebFetch",
+      "WebSearch",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/id_rsa*)",
+      "Read(**/.git/config)",
+      "Read(**/.ssh/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.gcp/**)",
+      "Read(**/credentials)",
+      "Read(**/secrets.yaml)",
+      "Read(**/secrets.yml)"
+    ]
+  },
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/pretooluse_bash_guard.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/pretooluse_file_guard.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/posttooluse_audit.py"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+[project]
+name = "any-fallback-transitive-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: any-fallback shape, TRANSITIVE signal."

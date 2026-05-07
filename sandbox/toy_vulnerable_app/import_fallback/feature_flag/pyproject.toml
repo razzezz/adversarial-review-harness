@@ -1,0 +1,4 @@
+[project]
+name = "feature-flag-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: feature-flag shape, DIRECT signal (secrets is a corpus leaf)."

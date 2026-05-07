@@ -1,0 +1,70 @@
+# Curated local Semgrep ruleset for the adversarial-review baseline_sast wrapper.
+#
+# Ships with the harness to avoid --config=auto, which pulls rules from the
+# Semgrep registry over HTTPS on every invocation (FND-INJ-0005 in the
+# 2026-04-23 review). Covers the high-value Python classes: deserialisation,
+# subprocess injection, eval/exec, pickle.
+#
+# Rules adapted from Semgrep's public p/python pack. Modify this file to
+# extend coverage; baseline_sast.py does not pin a version of this file.
+
+rules:
+  - id: python-yaml-load
+    patterns:
+      - pattern: yaml.load(...)
+      - pattern-not: yaml.load(..., Loader=yaml.SafeLoader)
+      - pattern-not: yaml.load(..., Loader=yaml.CSafeLoader)
+    message: "yaml.load without SafeLoader; untrusted input -> RCE (CWE-502)."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-502"
+
+  - id: python-subprocess-shell-true
+    patterns:
+      - pattern-either:
+          - pattern: subprocess.run(..., shell=True, ...)
+          - pattern: subprocess.Popen(..., shell=True, ...)
+          - pattern: subprocess.call(..., shell=True, ...)
+          - pattern: subprocess.check_output(..., shell=True, ...)
+          - pattern: subprocess.check_call(..., shell=True, ...)
+    message: "subprocess with shell=True; untrusted input -> CWE-78."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-78"
+
+  - id: python-os-system
+    pattern: os.system(...)
+    message: "os.system on untrusted input -> CWE-78."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-78"
+
+  - id: python-eval-use
+    pattern: eval(...)
+    message: "eval() on untrusted input -> CWE-94."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-94"
+
+  - id: python-exec-use
+    pattern: exec(...)
+    message: "exec() on untrusted input -> CWE-94."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-94"
+
+  - id: python-pickle-loads
+    patterns:
+      - pattern-either:
+          - pattern: pickle.loads(...)
+          - pattern: pickle.load(...)
+    message: "pickle.load(s) on untrusted input -> CWE-502."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-502"

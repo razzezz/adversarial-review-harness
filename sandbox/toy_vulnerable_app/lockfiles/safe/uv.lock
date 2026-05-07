@@ -1,0 +1,21 @@
+version = 1
+requires-python = ">=3.10"
+
+[manifest]
+provides-extras = ["test"]
+
+[[package]]
+name = "requests"
+version = "2.31.0"
+
+[[package]]
+name = "pytest"
+version = "8.0.0"
+
+[[package]]
+name = "setuptools"
+version = "68.0.0"
+
+[[package]]
+name = "wheel"
+version = "0.43.0"

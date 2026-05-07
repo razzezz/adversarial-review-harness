@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "drift-poetry-fixture"
+version = "0.0.1"
+description = ""
+authors = ["fixture <fixture@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = ">=2.30,<3"
+orphan-pkg = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

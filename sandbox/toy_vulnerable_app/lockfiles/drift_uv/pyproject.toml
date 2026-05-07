@@ -1,0 +1,14 @@
+[project]
+name = "drift-uv-fixture"
+version = "0.0.1"
+dependencies = [
+    "requests>=2.30,<3",
+    "orphan-pkg",
+]
+
+[project.optional-dependencies]
+demo = ["psutil"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel==0.43.0"]
+build-backend = "setuptools.build_meta"

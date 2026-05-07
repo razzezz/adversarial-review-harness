@@ -1,0 +1,4 @@
+[project]
+name = "transitive-paired-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: transitive paired-import via in-tree closure (load-bearing D8)."

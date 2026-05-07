@@ -1,0 +1,48 @@
+# Runtime outputs from the adversarial review harness.
+.claude/output/
+
+# The private findings queue in particular must never be committed.
+# This is a belt-and-braces line; .claude/output/ already covers it.
+.claude/output/private/
+
+# Python virtualenvs.
+.venv/
+venv/
+env/
+
+# Python caches.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Secrets. Should never exist in the tree anyway but belt-and-braces.
+.env
+.env.*
+!.env.example
+
+# IDE.
+.vscode/
+.idea/
+*.swp
+
+# OS.
+.DS_Store
+Thumbs.db
+
+# Docker artefacts if they leak out.
+*.tar
+
+# Internal design and decision documentation. Not part of the public artefact.
+docs/
+
+# Local scratch space for in-flight work.
+.claude/scratch/
+.claude/scratch_*.py
+
+# Per-user Claude Code permission overrides. Each user defines their own.
+.claude/settings.local.json
+

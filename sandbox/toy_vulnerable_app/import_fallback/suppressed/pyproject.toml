@@ -1,0 +1,4 @@
+[project]
+name = "suppressed-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: would-be-DIRECT silenced by # noqa."

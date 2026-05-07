@@ -1,0 +1,4 @@
+[project]
+name = "weak-signal-fixture"
+version = "0.0.1"
+description = "Slice-10 fixture: try-import with no corpus contact."

@@ -1,0 +1,3 @@
+# Dev-only dependencies. Not needed to run /adversarial-review itself.
+# Install with: pip install -r .claude/requirements-dev.txt
+pytest>=8.0,<9

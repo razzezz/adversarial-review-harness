@@ -1,0 +1,1 @@
+"""Legacy backend — no crypto."""
